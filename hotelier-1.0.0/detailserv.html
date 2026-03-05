@@ -1,0 +1,1268 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Harau Sky</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="fa/css/all.min.css">
+    <link rel="stylesheet" href="fa/css/solid.min.css">
+    <link rel="stylesheet" href="fa/css/fontawesome.min.css">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">  
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <style>
+    /* FOTO BESAR (LANDSCAPE) */
+    .main-photo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1.5px solid rgb(185, 182, 182);
+    }
+
+    .main-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: 0.5s ease;
+    
+    }
+
+    /* FOTO KECIL (LANDSCAPE) */
+    .small-photo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1.5px solid rgb(185, 182, 182);
+    border-radius: 12px;
+    }
+
+    .small-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    border-radius: 10px;
+    transition: 0.4s ease;
+    }
+
+    /* Hover effect */
+    .gallery-item:hover img {
+    transform: scale(1.08);
+    }
+        .dropdown-menu {
+    width: max-content;   /* mengikuti isi */
+    min-width: 100%;      /* minimal sama dengan button */
+    }
+
+    .dropdown-item {
+    white-space: normal;  /* teks boleh turun baris */
+    }
+
+    .room-thumb {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 4px;
+    }
+    .form-select:focus,
+    #selectedRoom:focus,
+    #selectedRoom:active,
+    #selectedRoom.show {
+    border-color: #ced4da;   /* warna border normal bootstrap */
+    box-shadow: none;       /* ini yang biasanya bikin glow/orange */
+    outline: none;
+    }
+    .room-item {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .room-item .p-4 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .room-item .text-body {
+        flex-grow: 1;
+    }
+
+    .room-item .d-flex.justify-content-between {
+        margin-top: auto;
+    }
+    .content-text h2 {
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #3b3b3b;
+    }
+
+    .content-text p {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+
+    /* ===== GALERI ===== */
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 12px;
+        cursor: zoom-in;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        background: #fff;
+        transition: transform 0.3s;
+    }
+
+    .gallery-item img {
+        transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.15);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-backdrop.show {
+        opacity: 0.85;
+        backdrop-filter: blur(6px);
+    }
+
+    .modal-content {
+        background: transparent;
+        border: none;
+    }
+
+    .modal-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: zoom-out;
+    }
+
+    .modal-body img {
+        max-width: 100%;
+        max-height: 100vh;
+        object-fit: contain;
+        animation: fadeImg 0.4s ease;
+    }
+
+    @keyframes fadeImg {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .btn-close {
+        filter: invert(1);
+        opacity: 0.8;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+    </style>
+    <body>
+        <div class="container-xxl bg-white p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+            <!-- Header Start -->
+            <div class="container-fluid bg-dark px-0">
+                <div style="background-color:#ffff;" class="row gx-0">
+                    <div class="col-lg-3 d-none bg-dark d-lg-block" style="background-color: #ffff;;">
+                        <a style="background-color:#ffff;" href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                            <h1 class="m-0 text-primary text-uppercase"><img style="width: 200px;" src="../backgorund/harausk blue.png" alt=""></h1>
+                        </a>
+                    </div>
+            
+
+                    <div class="col-lg-9" >
+                        <div class="row gx-0 d-none d-lg-flex" style="background-color:#173457;">
+                            <div class="col-lg-7 px-5 text-start">
+                                <div class="h-100 d-inline-flex align-items-center py-2 me-4">
+                                    <i class="fa fa-envelope text-primary me-2"></i>
+                                    <p class="mb-0 text-light">harausky@gmail.com</p>
+                                </div>
+                                <div class="h-100 d-inline-flex align-items-center py-2">
+                                    <i class="fa fa-phone-alt text-primary me-2"></i>
+                                    <p class="mb-0 text-light">+62 823 1000 5406</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 px-5 text-end">
+                                <div class="d-inline-flex align-items-center py-2">
+                                    <a class="me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
+                                    <a class="me-3" href=""><i class="fab fa-linkedin-in"></i></a>
+                                    <a class="me-3" href=""><i class="fab fa-instagram"></i></a>
+                                    <a class="" href=""><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <nav class="navbar navbar-expand-lg bg-white navbar-light p-3 p-lg-0">
+    <div class="container-fluid">
+
+        <!-- Hamburger (mobile) -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Logo (mobile: kanan, desktop: kiri via brand atas) -->
+        <a href="index.html" class="navbar-brand d-lg-none ms-auto">
+        <img src="../backgorund/HARAUSKY PT2.png" style="width:120px;">
+        </a>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav me-auto py-0">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link active" href="about.html">About</a>
+            <a class="nav-link" href="service.html">Services</a>
+            <a class="nav-link" href="room.html">Rooms</a>
+            <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+            <div class="dropdown-menu rounded-0 m-0">
+                <a href="booking.html" class="dropdown-item">Booking</a>
+                <a href="team.html" class="dropdown-item">Our Team</a>
+                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+            </div>
+            </div>
+            <a class="nav-link" href="contact.html">Contact</a>
+        </div>
+        </div>
+
+    </div>
+    </nav>
+
+                    </div>
+                </div>
+            </div> 
+            <!-- Header End -->
+
+
+            <!-- Page Header Start -->
+            <div class="container-fluid page-header mb-5 p-0" style="background-image: url(img/Cover\ room.JPG);">
+                <div class="container-fluid page-header-inner py-5">
+                    <div class="container text-center pb-5">
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Our Services</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center text-uppercase">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">Rooms</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+
+            <!-- Booking Start -->
+        
+            <!-- Room Start -->
+            <div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6 bg-dark d-flex align-items-center" id="ruangantipekamar">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Ruangan Dan Tipe Kamar
+                </h6>
+                <h2 class="text-white mb-4">
+                    Banyak Ruangan Dan Tipe Tipe Kamar Yang Menarik
+                </h2>
+                <p class="text-white mb-4">
+                    Nikmati suasana Lembah Harau dengan cara yang lebih santai.
+                    Harau Sky menawarkan villa nyaman, waterpark yang ramah keluarga, dan wahana untuk melepas penat.
+                    Cocok untuk liburan, berkumpul, atau sekadar rehat dari rutinitas
+                </p>
+                <a href="room.html" class="btn btn-primary py-md-3 px-md-5 me-3">Cek Kamar Sekarang!</a>
+            
+            </div>
+        </div>
+        <div class="col-md-6">
+           <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Tipe Kamar/dji_fly_20260130_140252_20260130140252_0276_D_1769952915805_photo.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Tipe Kamar/dji_fly_20260130_140341_20260130140341_0277_D_1769952915168_photo.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Tipe Kamar/dji_fly_20260130_140502_20260130140502_0278_D_1769952914514_photo.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Tipe Kamar/dji_fly_20260130_140533_20260130140533_0279_D_1769952913037_photo.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Tipe Kamar/dji_fly_20260130_141100_20260130141100_0290_D_1769952906371_photo.JPG" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6" id="restaurant">
+           <div id="carouselRestaurant" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Resto/dji_fly_20260130_140227_20260130140227_0275_D_1769952916451_photo.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Resto/dji_fly_20260130_141241_20260130141241_0294_D_1769952905833_photo.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Resto/IMG_5436.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Resto/IMG_5438.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Resto/IMG_5442.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Resto/IMG_5447.jpeg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselRestaurant" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselRestaurant" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+        <div class="col-md-6 bg-dark d-flex align-items-center">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Restaurant
+                </h6>
+                <h2 class="text-white mb-4">
+                    Nikmat Bersantap di Alam Lembah Harau
+                </h2>
+                <p class="text-white mb-4">
+                    Hadir dengan konsep alami dan nyaman, restoran ini mengajak Anda menikmati hidangan lezat di tengah pesona Lembah Harau yang asri. Tempat yang ideal untuk melepas penat dan menciptakan momen tak terlupakan.
+                </p>
+                <a href="room.html" class="btn btn-primary py-md-3 px-md-5 me-3">Menu</a>
+            
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6 bg-dark d-flex align-items-center" id="coffeeshop">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Coffee Shop
+                </h6>
+                <h2 class="text-white mb-4">
+                    Ngopi Santai Dengan Pemandangan Tebing Harau Yang Memukau
+                </h2>
+                <p class="text-white mb-4">
+                    menawarkan pengalaman ngopi yang berbeda, dikelilingi panorama tebing megah dan udara sejuk pegunungan. Dengan suasana yang tenang dan alami, setiap cangkir kopi terasa lebih nikmat, cocok untuk bersantai, berbincang, atau sekadar menikmati momen di tengah keindahan alam Harau.
+                </p>
+                <a href="room.html" class="btn btn-primary py-md-3 px-md-5 me-3">Menu</a>
+            
+            </div>
+        </div>
+        <div class="col-md-6">
+           <div id="carouselCoffee" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.45.56.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.45.59 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.45.59 (2).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.45.59.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.46.00.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.46.01 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.46.01 (2).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.46.01.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Coffeshop/WhatsApp Image 2026-01-30 at 09.46.02.jpeg" class="d-block w-100" alt="...">
+    </div>
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselCoffee" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselCoffee" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+    </div>
+
+    </div>
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6" id="waterpark">
+           <div id="carouselWaterpark" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+     <div class="carousel-item active">
+      <img src="../service/Waterpark/dji_fly_20260130_140753_20260130140753_0283_D_1769952910692_photo.jpeg" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/dji_fly_20260130_140858_20260130140858_0285_D_1769952909459_photo.jpeg" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/haii assalamualaikum selamat pagi semue nye bismillah  awali pagi  semoga berkah  aamiin (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/IMG_0611.jpeg" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/IMG_0620.jpeg" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/unnamed.webp" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/waterpark.jpeg" class="d-block w-100" alt="...">
+    </div>
+     <div class="carousel-item">
+      <img src="../service/Waterpark/WhatsApp Image 2024-10-23 at 18.24.17.jpeg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselWaterpark" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselWaterpark" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+        <div class="col-md-6 bg-dark d-flex align-items-center">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Waterpark
+                </h6>
+                <h2 class="text-white mb-4">
+                    Liburan Ceria di Harau Waterpark
+                </h2>
+                <p class="text-white mb-4">
+                    Waterpark di kawasan Lembah Harau menghadirkan keseruan bermain air di tengah panorama alam yang memukau. Dikelilingi tebing granit megah dan udara sejuk pegunungan, setiap wahana dirancang untuk menghadirkan keceriaan bagi anak-anak maupun orang dewasa.
+                </p>
+                </p>
+            
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6 bg-dark d-flex align-items-center" id="gathering">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Gathering
+                </h6>
+                <h2 class="text-white mb-4">
+                    Gathering Penuh Makna di Alam Harau
+                </h2>
+                <p class="text-white mb-4">
+                    Suasana sejuk pegunungan menciptakan ruang yang nyaman untuk berbagai aktivitas, mulai dari family gathering, outing kantor, hingga kegiatan outbound yang penuh keceriaan. Di sini, kebersamaan bukan hanya tentang berkumpul, tetapi tentang menciptakan cerita, mempererat hubungan, dan membawa pulang kenangan indah dari alam Harau yang memukau.
+            </div>
+        </div>
+        <div class="col-md-6">
+           <div id="carouselGathering" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Gathering/Snapinsta.app_361609868_17969755703525369_1772955381647962602_n_1080.jpeg" class="d-block w-100" alt="...">  
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_466641442_542466918543967_5940214825580128823_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_467240682_1108757084178854_5916476805981374911_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_467313408_540656065483834_8355908508298459157_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_467404371_925531505671941_4290984414427755592_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_467517842_2883916325115981_2935886137552299262_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_468659437_18029945495525369_3768686063813852013_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_468664477_18029945312525369_6620299406174089702_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_469015725_18029945138525369_2094664566654819441_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_469020940_18029945369525369_5968941123467788528_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/Snapinsta.app_469055179_18029945126525369_355695454438816215_n_1080.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/WhatsApp Image 2026-01-30 at 10.19.06 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/WhatsApp Image 2026-01-30 at 10.19.06 (2).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/WhatsApp Image 2026-01-30 at 10.19.06 (3).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Gathering/WhatsApp Image 2026-01-30 at 10.19.06.jpeg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselGathering" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselGathering" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+    </div>
+
+    </div>
+
+    <div  class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6" id="flyingfox">
+           <div id="carouselFlyingfox" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Flying Fox & Kuda/IMG_5040 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/1.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/3.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/4.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/5.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/IMG_0707.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/IMG_0708.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/IMG_5040 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/IMG_5151A.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/IMG_5152 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/1.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/2.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Flying Fox & Kuda/IMG_7590.heif" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselFlyingfox" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselFlyingfox" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+        <div class="col-md-6 bg-dark d-flex align-items-center">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Flying Fox & Kuda
+                </h6>
+                <h2 class="text-white mb-4">
+                    Eksplorasi Seru di Lembah Harau
+                </h2>
+                <p class="text-white mb-4">
+                    Di Lembah Harau, petualangan bertemu dengan keindahan alam lewat wahana flying fox dan berkuda yang seru. Flying fox membawa adrenalin Anda meluncur dari ketinggian, menawarkan sensasi terbang sambil menikmati panorama tebing granit dan lembah hijau yang memukau. Setiap teriakan kegembiraan terasa sempurna diiringi semilir angin dan pemandangan asri.
+                </p>
+                
+            
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6 bg-dark d-flex align-items-center" id="bbq">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                   Area BBQ
+                </h6>
+                <h2 class="text-white mb-4">
+                Bakar Seru di Alam Terbuka
+                </h2>
+                <p class="text-white mb-4">
+                   Fasilitas BBQ di Lembah Harau menghadirkan pengalaman kuliner outdoor yang hangat dan seru di tengah alam yang memukau. Dengan area panggangan yang nyaman dan pemandangan hijau serta tebing granit sebagai latar, Anda dapat menikmati daging bakar, seafood, dan aneka lauk panggang dengan aroma khas dan cita rasa istimewa.
+                </p>
+            
+            </div>
+        </div>
+        <div class="col-md-6">
+           <div id="carouselBBQ" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/BBQ/WhatsApp Image 2025-10-30 at 11.17.50.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/BBQ/WhatsApp Image 2025-05-10 at 09.31.33.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/BBQ/WhatsApp Image 2025-07-26 at 13.33.19 (1).jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/BBQ/WhatsApp Image 2025-07-26 at 13.33.19.jpeg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/BBQ/WhatsApp Image 2025-10-30 at 11.18.25.jpeg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselBBQ" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselBBQ" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+    </div>
+
+    </div>
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6" id="mushalla">
+           <div id="carouselMushalla" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Mushalla/IMG_9658.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Mushalla/IMG_9659.JPG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Mushalla/IMG_9662.JPG" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselMushalla" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselMushalla" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+
+        <div class="col-md-6 bg-dark d-flex align-items-center">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                    Mushalla
+                </h6>
+                <h2 class="text-white mb-4">
+                    Harau Prayer Space
+                </h2>
+                <p class="text-white mb-4">
+                    Suasana yang hening dan alami menciptakan ruang ibadah yang damai, jauh dari hiruk pikuk, sehingga hati lebih mudah terhubung dalam keheningan. Di sini, sholat bukan hanya kewajiban, tetapi juga momen refleksi dan syukur yang menyatu dengan keindahan ciptaan-Nya.
+        
+            
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+<div class="container-xxl py-3 px-0 wow zoomIn" data-wow-delay="0.1s">
+    <div class="row g-0 align-items-stretch hero-row">
+
+        <div class="col-md-6 bg-dark d-flex align-items-center" id="bl">
+            <div class="p-4">
+                <h6 class="section-title text-start text-white text-uppercase mb-3">
+                   Billiard
+                </h6>
+                <h2 class="text-white mb-4">
+                   Santai Seru Bersama di Harau
+                </h2>
+                <p class="text-white mb-4">
+                  Di tengah udara sejuk pegunungan dan suasana alam yang menenangkan, setiap pukulan terasa lebih santai namun tetap seru. Tawa dan obrolan hangat mengalir di sela permainan, menciptakan momen kebersamaan yang penuh cerita.
+                </p>
+            
+            </div>
+        </div>
+        <div class="col-md-6">
+           <div id="carouselBilliard" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../service/Billiard/IMG_9666.PNG" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="../service/Billiard/IMG_9667.PNG" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselBilliard" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselBilliard" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+        </div>
+    </div>
+
+    </div>
+
+    </div>
+
+    <!-- Pastikan sudah include Bootstrap CSS & JS serta Bootstrap Icons di halaman -->
+
+    <style>
+    /* Space antar kolom */
+    .row.custom-gap {
+        gap: 1rem;
+    }
+
+    /* Border vertikal antar kolom di desktop */
+    @media (min-width: 768px) {
+        .col-md-7 {
+        border-right: 1px solid #ccc;
+        }
+        .row.no-wrap-desktop {
+        flex-wrap: nowrap; /* supa row tidak membungkus di desktop */
+        }
+    }
+
+    /* Padding & box-sizing */
+    .col-12, .col-md-7, .col-md-5 {
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    /* Batasi carousel agar tetap proporsional */
+    #ratingCarousel img {
+        max-width: 100%;
+        height: auto;
+    }
+    </style>
+
+    <div class="container py-3">
+    <div class="row align-items-start custom-gap no-wrap-desktop">
+    
+
+        
+    <!-- <div class="col-12 col-md-8" 
+        style="border: 1px solid rgb(231, 229, 229); border-radius: 8px; padding: 1rem;">
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Fasilitasi Luar Biasa</h2>
+        <div class="d-flex gap-3">
+        <i class="bi bi-wifi" style="font-size: 1.5rem; color: #114380" title="WiFi Gratis"></i>
+        <i class="bi bi-cup-fill" style="font-size: 1.5rem; color: #114380" title="Sarapan Gratis"></i>
+        <i class="bi bi-door-open" style="font-size: 1.5rem; color: #114380" title="Akses / Parkir"></i>
+        <i class="bi bi-cash-stack" style="font-size: 1.5rem; color: #114380" title="Harga Terjangkau"></i>
+        </div>
+    </div>
+
+    
+    <div class="row text-start">
+        
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> WiFi Gratis
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Sarapan Pagi
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Kolam Renang
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Parkir Gratis
+        </div>
+
+        
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Layanan 24 Jam
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> AC & Heating
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Restoran
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Gym
+        </div>
+    </div> 
+
+    </div> -->
+
+        
+        
+
+    </div>
+    </div>
+    <!-- MODAL SINGLE LIGHTBOX -->
+    <div class="modal fade" id="lightboxModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border-0 position-absolute top-0 end-0 p-3">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" data-bs-dismiss="modal">
+                    <img id="lightboxImage" src="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightboxImage = document.getElementById('lightboxImage');
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            lightboxImage.src = item.getAttribute('data-full');
+        });
+    });
+    </script>
+
+            <!-- Room End -->
+
+
+            <!-- Testimonial Start -->
+            <!-- Testimonial End -->
+
+
+            <!-- Newsletter Start -->
+            <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="row justify-content-center">
+                    
+                </div>
+            </div>
+            <!-- Newsletter Start -->
+            
+
+            <!-- Footer Start -->
+            <div class="container-fluid bg-dark text-light footer wow fadeIn mt-3" data-wow-delay="0.1s">
+                <div class="container pb-5">
+                    <div class="row g-6">
+                        <div class="col-md-5 col-lg-4">
+                            <div class="bg-primary rounded p-4">
+                                <a href="index.html"><h1 class="text-white text-uppercase mb-3">Hotelier</h1></a>
+                                <p class="text-white mb-0">
+                                    Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">Hotelier – Premium Version</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
+                                </p>    
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <h6 class="section-title text-start text-primary text-uppercase mb-4">Contact</h6>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Harau, Kab. Lima Puluh Kota, Sumbar</p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+62 823 1000 5406</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>harausky@gmail.com</p>
+                            <div class="d-flex pt-2">
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="row gy-5 g-4">
+                                <div class="col-md-6">
+                                    <h6 class="section-title text-start text-primary text-uppercase mb-4">Company</h6>
+                                    <a class="btn btn-link" href="">About Us</a>
+                                    <a class="btn btn-link" href="">Contact Us</a>
+                                    <a class="btn btn-link" href="">Privacy Policy</a>
+                                    <a class="btn btn-link" href="">Terms & Condition</a>
+                                    <a class="btn btn-link" href="">Support</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="section-title text-start text-primary text-uppercase mb-4">Services</h6>
+                                    <a class="btn btn-link" href="">Food & Restaurant</a>
+                                    <a class="btn btn-link" href="">Spa & Fitness</a>
+                                    <a class="btn btn-link" href="">Sports & Gaming</a>
+                                    <a class="btn btn-link" href="">Event & Party</a>
+                                    <a class="btn btn-link" href="">GYM & Yoga</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved. 
+                                
+                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                                Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                                <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            </div>
+                            <div class="col-md-6 text-center text-md-end">
+                                <div class="footer-menu">
+                                    <a href="">Home</a>
+                                    <a href="">Cookies</a>
+                                    <a href="">Help</a>
+                                    <a href="">FQAs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+    <script src="fa/js/all.min.js"></script>
+    <script src="fa/js/solid.min.js"></script>
+    <script src="fa/js/fontawesome.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="https://kit.fontawesome.com" crossorigin="anonymous"></script>
+        <script>
+    function pesanKamar(tipeKamar, linkProduk) {
+    const nomorWA = "6289529394395";
+
+    const pesan = `Halo Admin Harau Sky,
+    Saya tertarik dengan kamar tipe ${tipeKamar}.
+
+    Link katalog produk:
+    ${linkProduk}
+
+    Mohon info ketersediaan & harga.
+    Terima kasih.`;
+
+    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+    window.open(url, "_blank");
+    }
+    </script>
+    <script>
+    const params = new URLSearchParams(window.location.search);
+    const room = params.get("room");
+    
+    const rooms = {
+    deluxe: {
+        title: "Deluxe Room",
+        desc1: "Nikmati kenyamanan maksimal di Deluxe Room, kamar elegan dengan desain modern yang dirancang untuk memberikan pengalaman menginap yang hangat dan menyenangkan. Cocok untuk perjalanan bisnis maupun liburan bersama pasangan atau keluarga kecil.",
+        desc2: "Kamar ini dilengkapi dengan tempat tidur premium yang nyaman, pencahayaan hangat, serta interior yang bersih dan stylish untuk menunjang istirahat berkualitas Anda.",
+        facilities : [
+            "Wifi Gratis",
+            "Pakiran Gratis",
+            "Tempat nyaman",
+            "Breakfast/sarapan",
+            "Tempat bersih",
+            "Kasur empuk",
+            "",
+        ],
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+
+    superior: {
+        title: "Superior Room",
+        desc1: "menawarkan kenyamanan maksimal dengan desain modern dan minimalis yang menenangkan. Didesain khusus untuk pasangan atau tamu yang menginginkan suasana tenang dengan pemandangan pegunungan yang indah, kamar ini menghadirkan suasana elegan dan hangat.",
+        desc2: "Setiap sudut ruang dilengkapi fasilitas lengkap untuk memastikan pengalaman menginap yang menyenangkan, mulai dari tempat tidur king size yang empuk hingga pencahayaan lembut yang menciptakan nuansa rileks. Cocok bagi Anda yang ingin melepas penat sambil menikmati keindahan alam sekitar.",
+        images: [
+        "https://www.idemu.com/wp-content/uploads/2024/03/DSC00418-Edit-1024x683.png",
+        "https://static.uc.ac.id/htb/2024/01/Desain-Kamar-Hotel-yang-Menakjubkan-di-Dunia-Perhotelan.jpg",
+        "https://cdn.pixabay.com/photo/2023/04/13/07/27/bedroom-7921915_1280.jpg",
+        "https://statik.tempo.co/data/2024/03/23/id_1289776/1289776_720.jpg",
+        "https://images.tokopedia.net/blog-tokopedia-com/uploads/2020/02/3.-Deluxe-Room-sumber-gambar-Pixabay.jpg",
+        "https://images.tokopedia.net/blog-tokopedia-com/uploads/2020/02/4.-Family-room-sumber-gambar-newsaphirhotel.jpg",
+        "https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2021/11/ezgif.com-gif-maker-2021-11-26T170926.859.webp",
+        "https://media.istockphoto.com/id/627892060/id/foto/suite-kamar-hotel-dengan-pemandangan.jpg?s=612x612&w=0&k=20&c=_pdFVQvsCDizFdjZNJlekoQtDaN0m_K62TMvl8mfOzY=",
+        "https://media-cdn.tripadvisor.com/media/photo-s/05/e4/72/69/kamar-hotel.jpg",
+        "https://awsimages.detik.net.id/community/media/visual/2023/12/18/padma-hotel-semarang_43.jpeg?w=1200",
+        ]
+    },
+
+    family: {
+        title: "Family Room",
+        desc1: "Family Room luas untuk keluarga.",
+        desc2: "Memiliki 2 tempat tidur besar kapasitas 4 orang.",
+        facilities : [
+            "Wifi Gratis",
+            "Pakiran Gratis",
+            "Tempat nyaman",
+            "Breakfast/sarapan",
+            "Tempat bersih",
+            "Kasur empuk",
+
+        ],
+        images: [
+        "img/family1.jpg",
+        "img/family2.jpg",
+        "img/family3.jpg",
+        "img/family4.jpg",
+        "img/family5.jpg",
+        "img/family6.jpg"
+        ]
+    },
+    bigfamilyroom: {
+        title: "Big Family Room",
+        desc1: "Big Family Room luas untuk keluarga.",
+        desc2: "Memiliki 2 tempat tidur besar kapasitas 4 orang.",
+        images: [
+        "img/family1.jpg",
+        "img/family2.jpg",
+        "img/family3.jpg",
+        "img/family4.jpg",
+        "img/family5.jpg",
+        "img/family6.jpg"
+        ]
+    },
+    swissroom: {
+        title: "Swiss Room",
+        desc1: "Swiss Room luas untuk keluarga.",
+        desc2: "Swiss Room memiliki total 6 kamar pada Villa Warna warni dengan kapasitas 2 Orang/kamar dan dilengkapi dengan 1 King bed.",
+        images: [
+        "img/family1.jpg",
+        "img/family2.jpg",
+        "img/family3.jpg",
+        "img/family4.jpg",
+        "img/family5.jpg",
+        "img/family6.jpg"
+        ]
+    },
+    venessia: {
+        title: "Venessia Room",
+        desc1: "Venessia Room luas untuk keluarga.",
+        desc2: "Venesia Room memiliki total 4 Kamar pada Villa Warna warni dengan kapasitas 2 Orang/kamar dan di lengkapi dengan 1 King bed.",
+        images: [
+        "img/family1.jpg",
+        "img/family2.jpg",
+        "img/family3.jpg",
+        "img/family4.jpg",
+        "img/family5.jpg",
+        "img/family6.jpg"
+        ]
+    },
+    sprbigfamilyroom: {
+        title: "Super Big Family Room",
+        desc1: "Super Big Family Room luas untuk keluarga.",
+        desc2 : "Super Big Family Room memiliki 3 total kamar pada Villa Warna warni dengan kapasitas 8 Orang/kamar di lengkapi dengan 4 King bed.",
+        images: [
+        "img/family1.jpg",
+        "img/family2.jpg",
+        "img/family3.jpg",
+        "img/family4.jpg",
+        "img/family5.jpg",
+        "img/family6.jpg"
+        ]
+    },
+    glamping: {
+        title: "Glamping",
+        desc1: "Glamping Harau Sky.",
+        desc2 :"Glamping Harau Sky memiliki 2 unit kamar dengan kapasitas 2 Orang dewasa, dilengkapi dengan 1 King bed.",
+        images: [
+        "img/family1.jpg",
+        "img/family2.jpg",
+        "img/family3.jpg",
+        "img/family4.jpg",
+        "img/family5.jpg",
+        "img/family6.jpg"
+        ]
+    }
+      
+    };
+
+function renderFacilities() {
+    const html = `
+        <div style="border: 1px solid rgb(231, 229, 229); border-radius: 8px; padding: 1rem;">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">Fasilitasi Luar Biasa</h2>
+                <div class="d-flex gap-3">
+                    <i class="bi bi-wifi" style="font-size: 1.5rem; color: #114380"></i>
+                    <i class="bi bi-cup-fill" style="font-size: 1.5rem; color: #114380"></i>
+                    <i class="bi bi-door-open" style="font-size: 1.5rem; color: #114380"></i>
+                    <i class="bi bi-cash-stack" style="font-size: 1.5rem; color: #114380"></i>
+                </div>
+            </div>
+
+            <div class="row text-start">
+                ${generateFacilityItems()}
+            </div>
+
+        </div>
+    `;
+
+    document.getElementById("roomFacilities").innerHTML = html;
+}
+
+   function generateFacilityItems() {
+
+    if (!rooms[room] || !rooms[room].facilities) return "";
+
+    return rooms[room].facilities.map(item => `
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+            <i class="bi bi-check-circle-fill text-success me-2"></i> ${item}
+        </div>
+    `).join("");
+}
+
+    renderFacilities();
+    if (rooms[room]) {
+
+    // Ubah teks
+    document.getElementById("roomTitle").innerText = rooms[room].title;
+    document.getElementById("roomDesc1").innerText = rooms[room].desc1;
+    document.getElementById("roomDesc2").innerText = rooms[room].desc2;
+
+    // Ubah gallery
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach((item, index) => {
+        if (rooms[room].images[index]) {
+            item.querySelector("img").src = rooms[room].images[index];
+            item.setAttribute("data-full", rooms[room].images[index]);
+        }
+    });
+
+    } else {
+    document.getElementById("roomTitle").innerText = "Room Not Found";
+    }
+    </script>
+
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+    </body>
+
+    </html>

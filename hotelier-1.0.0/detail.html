@@ -1,0 +1,1284 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Harau Sky</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+       
+    <link rel="stylesheet" href="fa/css/all.min.css">
+    <link rel="stylesheet" href="fa/css/solid.min.css">
+    <link rel="stylesheet" href="fa/css/fontawesome.min.css">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">  
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <style>
+    /* FOTO BESAR (LANDSCAPE) */
+    .main-photo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1.5px solid rgb(185, 182, 182);
+    }
+
+    .main-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: 0.5s ease;
+    
+    }
+
+    /* FOTO KECIL (LANDSCAPE) */
+    .small-photo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1.5px solid rgb(185, 182, 182);
+    border-radius: 12px;
+    }
+
+    .small-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+    border-radius: 10px;
+    transition: 0.4s ease;
+    }
+
+    /* Hover effect */
+    .gallery-item:hover img {
+    transform: scale(1.08);
+    }
+        .dropdown-menu {
+    width: max-content;   /* mengikuti isi */
+    min-width: 100%;      /* minimal sama dengan button */
+    }
+
+    .dropdown-item {
+    white-space: normal;  /* teks boleh turun baris */
+    }
+
+    .room-thumb {
+    width: 60px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 4px;
+    }
+    .form-select:focus,
+    #selectedRoom:focus,
+    #selectedRoom:active,
+    #selectedRoom.show {
+    border-color: #ced4da;   /* warna border normal bootstrap */
+    box-shadow: none;       /* ini yang biasanya bikin glow/orange */
+    outline: none;
+    }
+    .room-item {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .room-item .p-4 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .room-item .text-body {
+        flex-grow: 1;
+    }
+
+    .room-item .d-flex.justify-content-between {
+        margin-top: auto;
+    }
+    .content-text h2 {
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #3b3b3b;
+    }
+
+    .content-text p {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+
+    /* ===== GALERI ===== */
+    .gallery-item {
+        overflow: hidden;
+        border-radius: 12px;
+        cursor: zoom-in;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        background: #fff;
+        transition: transform 0.3s;
+    }
+
+    .gallery-item img {
+        transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+        transform: scale(1.15);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-backdrop.show {
+        opacity: 0.85;
+        backdrop-filter: blur(6px);
+    }
+
+    .modal-content {
+        background: transparent;
+        border: none;
+    }
+
+    .modal-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: zoom-out;
+    }
+
+    .modal-body img {
+        max-width: 100%;
+        max-height: 100vh;
+        object-fit: contain;
+        animation: fadeImg 0.4s ease;
+    }
+
+    @keyframes fadeImg {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    .btn-close {
+        filter: invert(1);
+        opacity: 0.8;
+    }
+
+    .btn-close:hover {
+        opacity: 1;
+    }
+    </style>
+    <body>
+        <div class="bg-white p-0">
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+            <!-- Header Start -->
+            <div class="container-fluid bg-dark px-0">
+                <div style="background-color:#ffff;" class="row gx-0">
+                    <div class="col-lg-3 d-none bg-dark d-lg-block" style="background-color: #ffff;;">
+                        <a style="background-color:#ffff;" href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                            <h1 class="m-0 text-primary text-uppercase"><img style="width: 200px;" src="../backgorund/harausk blue.png" alt=""></h1>
+                        </a>
+                    </div>
+            
+
+                    <div class="col-lg-9" >
+                        <div class="row gx-0 d-none d-lg-flex" style="background-color:#173457;">
+                            <div class="col-lg-7 px-5 text-start">
+                                <div class="h-100 d-inline-flex align-items-center py-2 me-4">
+                                    <i class="fa fa-envelope text-primary me-2"></i>
+                                    <p class="mb-0 text-light">harausky@gmail.com</p>
+                                </div>
+                                <div class="h-100 d-inline-flex align-items-center py-2">
+                                    <i class="fa fa-phone-alt text-primary me-2"></i>
+                                    <p class="mb-0 text-light">+62 823 1000 5406</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 px-5 text-end">
+                                <div class="d-inline-flex align-items-center py-2">
+                                    <a class="me-3" href=""><i class="fab fa-facebook-f"></i></a>
+                                    <a class="me-3" href=""><i class="fab fa-twitter"></i></a>
+                                    <a class="me-3" href=""><i class="fab fa-linkedin-in"></i></a>
+                                    <a class="me-3" href=""><i class="fab fa-instagram"></i></a>
+                                    <a class="" href=""><i class="fab fa-youtube"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <nav class="navbar navbar-expand-lg bg-white navbar-light p-3 p-lg-0">
+    <div class="container-fluid">
+
+        <!-- Hamburger (mobile) -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Logo (mobile: kanan, desktop: kiri via brand atas) -->
+        <a href="index.html" class="navbar-brand d-lg-none ms-auto">
+        <img src="../backgorund/HARAUSKY PT2.png" style="width:120px;">
+        </a>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav me-auto py-0">
+            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link active" href="about.html">About</a>
+            <a class="nav-link" href="service.html">Services</a>
+            <a class="nav-link" href="room.html">Rooms</a>
+            <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+            <div class="dropdown-menu rounded-0 m-0">
+                <a href="booking.html" class="dropdown-item">Booking</a>
+                <a href="team.html" class="dropdown-item">Our Team</a>
+                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+            </div>
+            </div>
+            <a class="nav-link" href="contact.html">Contact</a>
+        </div>
+        </div>
+
+    </div>
+    </nav>
+
+                    </div>
+                </div>
+            </div> 
+            <!-- Header End -->
+
+
+            <!-- Page Header Start -->
+            <div class="container-fluid page-header mb-5 p-0" style="background-image: url(img/Cover\ room.JPG);">
+                <div class="container-fluid page-header-inner py-5">
+                    <div class="container text-center pb-5">
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Rooms</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center text-uppercase">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">Rooms</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Header End -->
+
+
+            <!-- Booking Start -->
+        
+            <!-- Room Start -->
+            <div class="container-fluid py-5" style="background-color: rgb(242, 245, 245);">
+        <div class="row align-items-center g-5">
+
+            <!-- KIRI : GALERI -->
+            <div class="col-lg-6">
+    <div class="row g-3 mb-1">
+
+    <!-- FOTO BESAR (KIRI) -->
+    <div class="col-md-6">
+        <div class="gallery-item main-photo"
+            data-bs-toggle="modal"
+            data-bs-target="#lightboxModal"
+            data-full="https://picsum.photos/id/1015/2000/1200">
+        <img src="https://picsum.photos/id/1015/800/1000"
+            class="img-fluid w-100 h-100">
+        </div>
+    </div>
+
+    <!-- 4 FOTO KECIL (KANAN) -->
+    <div class="col-md-6">
+        <div class="row g-3">
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1025/2000/1200">
+            <img src="https://picsum.photos/id/1025/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1035/2000/1200">
+            <img src="https://picsum.photos/id/1035/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1045/2000/1200">
+            <img src="https://picsum.photos/id/1045/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1055/2000/1200">
+            <img src="https://picsum.photos/id/1055/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    </div>
+
+    <!-- KEBALIKAN: 4 FOTO KECIL (KIRI) + FOTO BESAR (KANAN) -->
+    <div class="row g-3">
+
+    <!-- 4 FOTO KECIL (KIRI) -->
+    <div class="col-md-6">
+        <div class="row g-3">
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1065/2000/1200">
+            <img src="https://picsum.photos/id/1065/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1075/2000/1200">
+            <img src="https://picsum.photos/id/1075/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1085/2000/1200">
+            <img src="https://picsum.photos/id/1085/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="gallery-item small-photo"
+                data-bs-toggle="modal"
+                data-bs-target="#lightboxModal"
+                data-full="https://picsum.photos/id/1095/2000/1200">
+            <img src="https://picsum.photos/id/1095/600/400"
+                class="img-fluid w-100">
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <!-- FOTO BESAR (KANAN) -->
+    <div class="col-md-6 mt-4">
+        <div class="gallery-item main-photo"
+            data-bs-toggle="modal"
+            data-bs-target="#lightboxModal"
+            data-full="https://picsum.photos/id/1105/2000/1200">
+        <img src="https://picsum.photos/id/1105/800/1000"
+            class="img-fluid w-100 h-100">
+        </div>
+    </div>
+
+    </div>
+    </div>
+            <!-- KANAN : TEKS -->
+            <div class="col-lg-6 content-text">
+                <h2 id="roomTitle">Penginapan Nyaman & Elegan</h2>
+                <p id="roomDesc1">
+                    Nikmati suasana hotel/resort yang tenang dan mewah.
+                    Setiap sudut dirancang agar tamu merasa rileks dan nyaman.
+                </p>
+                <p id="roomDesc2">
+                    Klik foto untuk melihat detail kamar dan fasilitas
+                    dengan tampilan fullscreen lightbox yang smooth.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pastikan sudah include Bootstrap CSS & JS serta Bootstrap Icons di halaman -->
+
+    <style>
+    /* Space antar kolom */
+    .row.custom-gap {
+        gap: 1rem;
+    }
+
+    /* Border vertikal antar kolom di desktop */
+    @media (min-width: 768px) {
+        .col-md-7 {
+        border-right: 1px solid #ccc;
+        }
+        .row.no-wrap-desktop {
+        flex-wrap: nowrap; /* supa row tidak membungkus di desktop */
+        }
+    }
+
+    /* Padding & box-sizing */
+    .col-12, .col-md-7, .col-md-5 {
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    /* Batasi carousel agar tetap proporsional */
+    #ratingCarousel img {
+        max-width: 100%;
+        height: auto;
+    }
+    </style>
+
+    <div class="container-fluid py-3">
+         <a href="booking.html" class="btn btn-primary">Booking sekarang</a>
+    <div class="row align-items-start custom-gap no-wrap-desktop">
+    <div class="col-12 col-md-8 d-flex">
+    <div id="roomFacilities" class="w-100">
+    </div>
+</div>
+
+        
+    <!-- <div class="col-12 col-md-8" 
+        style="border: 1px solid rgb(231, 229, 229); border-radius: 8px; padding: 1rem;">
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Fasilitasi Luar Biasa</h2>
+        <div class="d-flex gap-3">
+        <i class="bi bi-wifi" style="font-size: 1.5rem; color: #114380" title="WiFi Gratis"></i>
+        <i class="bi bi-cup-fill" style="font-size: 1.5rem; color: #114380" title="Sarapan Gratis"></i>
+        <i class="bi bi-door-open" style="font-size: 1.5rem; color: #114380" title="Akses / Parkir"></i>
+        <i class="bi bi-cash-stack" style="font-size: 1.5rem; color: #114380" title="Harga Terjangkau"></i>
+        </div>
+    </div>
+
+    
+    <div class="row text-start">
+        
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> WiFi Gratis
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Sarapan Pagi
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Kolam Renang
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Parkir Gratis
+        </div>
+
+        
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Layanan 24 Jam
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> AC & Heating
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Restoran
+        </div>
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+        <i class="bi bi-check-circle-fill text-success me-2"></i> Gym
+        </div>
+    </div> 
+
+    </div> -->
+
+        
+       <div class="col-12 col-md-4 mt-3 mt-md-0 d-flex">
+
+<div style="border:1px solid rgb(231, 229, 229);
+border-radius:8px;
+text-align:left;
+padding:1rem;
+width:100%;
+height:100%;">
+        
+        <div class="ratio ratio-16x9 mb-3">
+        <iframe
+    src="https://maps.google.com/maps?q=Tarantang,+Harau,+Lima+Puluh+Kota+Regency,+West+Sumatra&z=15&output=embed"
+    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+    </iframe>
+        </div>
+
+        
+        <div style="font-weight:bold; font-size:1.2rem; color:#000; display:flex; align-items:center; gap:5px; margin-bottom:0.5rem;">
+            <i class="bi bi-award-fill"></i> Lokasi yang sangat bagus
+        </div>
+        <div><small>4.543 ulasan</small></div>
+
+        
+        <style>
+            .bg-primaryy{
+                background-color: #114380;
+            }
+        </style>
+        <div class="mt-2 mb-3">
+            <span class="badge bg-primaryy me-1">Layanan 9,3</span>
+            <span class="badge bg-primaryy me-1">Kebersihan 9,2</span>
+            <span class="badge bg-primaryy me-1">Harga 9,2</span>
+            <span class="badge bg-primaryy">Fasilitas 9,1</span>
+        </div>
+
+        
+        
+
+        </div>
+
+    </div>
+    </div>
+    <!-- MODAL SINGLE LIGHTBOX -->
+    <div class="modal fade" id="lightboxModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border-0 position-absolute top-0 end-0 p-3">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" data-bs-dismiss="modal">
+                    <img id="lightboxImage" src="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const lightboxImage = document.getElementById('lightboxImage');
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            lightboxImage.src = item.getAttribute('data-full');
+        });
+    });
+    </script>
+
+            <!-- Room End -->
+
+
+            <!-- Testimonial Start -->
+            <!-- Testimonial End -->
+
+
+            <!-- Newsletter Start -->
+            <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="row justify-content-center">
+                    
+                </div>
+            </div>
+            <!-- Newsletter Start -->
+            
+
+            <!-- Footer Start -->
+         
+            <!-- Footer End -->
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
+    <script src="fa/js/all.min.js"></script>
+    <script src="fa/js/solid.min.js"></script>
+    <script src="fa/js/fontawesome.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/wow/wow.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="https://kit.fontawesome.com" crossorigin="anonymous"></script>
+        <script>
+    function pesanKamar(tipeKamar, linkProduk) {
+    const nomorWA = "6289529394395";
+
+    const pesan = `Halo Admin Harau Sky,
+    Saya tertarik dengan kamar tipe ${tipeKamar}.
+
+    Link katalog produk:
+    ${linkProduk}
+
+    Mohon info ketersediaan & harga.
+    Terima kasih.`;
+
+    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+    window.open(url, "_blank");
+    }
+    </script>
+    <script>
+    const params = new URLSearchParams(window.location.search);
+    const room = params.get("room");
+    
+    const rooms = {
+    deluxe: {
+        title: "Deluxe Room",
+        desc1: "Nikmati kenyamanan maksimal di Deluxe Room, kamar elegan dengan desain modern yang dirancang untuk memberikan pengalaman menginap yang hangat dan menyenangkan. Cocok untuk perjalanan bisnis maupun liburan bersama pasangan atau keluarga kecil.",
+        desc2: "Kamar ini dilengkapi dengan tempat tidur premium yang nyaman, pencahayaan hangat, serta interior yang bersih dan stylish untuk menunjang istirahat berkualitas Anda.",
+       facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+
+    superior: {
+        title: "Superior Room",
+        desc1: "menawarkan kenyamanan maksimal dengan desain modern dan minimalis yang menenangkan. Didesain khusus untuk pasangan atau tamu yang menginginkan suasana tenang dengan pemandangan pegunungan yang indah, kamar ini menghadirkan suasana elegan dan hangat.",
+        desc2: "Setiap sudut ruang dilengkapi fasilitas lengkap untuk memastikan pengalaman menginap yang menyenangkan, mulai dari tempat tidur king size yang empuk hingga pencahayaan lembut yang menciptakan nuansa rileks. Cocok bagi Anda yang ingin melepas penat sambil menikmati keindahan alam sekitar.",
+        facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+
+    family: {
+        title: "Family Room",
+        desc1: "Family Room luas untuk keluarga.",
+        desc2: "Memiliki 2 tempat tidur besar kapasitas 4 orang.",
+        facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+    bigfamilyroom: {
+        title: "Big Family Room",
+        desc1: "Big Family Room luas untuk keluarga.",
+        desc2: "Memiliki 2 tempat tidur besar kapasitas 4 orang.",
+      facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+    swissroom: {
+        title: "Swiss Room",
+        desc1: "Swiss Room luas untuk keluarga.",
+        desc2: "Swiss Room memiliki total 6 kamar pada Villa Warna warni dengan kapasitas 2 Orang/kamar dan dilengkapi dengan 1 King bed.",
+        facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+    venessia: {
+        title: "Venessia Room",
+        desc1: "Venessia Room luas untuk keluarga.",
+        desc2: "Venesia Room memiliki total 4 Kamar pada Villa Warna warni dengan kapasitas 2 Orang/kamar dan di lengkapi dengan 1 King bed.",
+       facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+    sprbigfamilyroom: {
+        title: "Super Big Family Room",
+        desc1: "Super Big Family Room luas untuk keluarga.",
+        desc2 : "Super Big Family Room memiliki 3 total kamar pada Villa Warna warni dengan kapasitas 8 Orang/kamar di lengkapi dengan 4 King bed.",
+        facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    },
+    glamping: {
+        title: "Glamping",
+        desc1: "menawarkan pengalaman menginap yang unik dengan konsep glamorous camping yang memadukan kenyamanan hotel dengan keindahan alam terbuka. Terletak di kawasan Lembah Harau yang terkenal dengan tebing batu granit yang menjulang tinggi serta udara pegunungan yang sejuk, glamping ini menjadi pilihan sempurna bagi Anda yang ingin merasakan sensasi berkemah tanpa harus meninggalkan kenyamanan modern.",
+        desc2 :"menawarkan pengalaman menginap yang unik dengan konsep glamorous camping yang memadukan kenyamanan hotel dengan keindahan alam terbuka. Terletak di kawasan Lembah Harau yang terkenal dengan tebing batu granit yang menjulang tinggi serta udara pegunungan yang sejuk, glamping ini menjadi pilihan sempurna bagi Anda yang ingin merasakan sensasi berkemah tanpa harus meninggalkan kenyamanan modern.",
+       facilities: {
+    umum: [
+        {icon:"bi-wifi", text:"WiFi Gratis"},
+        {icon:"bi-cup-hot", text:"Sarapan Pagi"},
+        {icon:"bi-water", text:"Kolam Renang"},
+        {icon:"bi-car-front", text:"Parkir Gratis"},
+        {icon:"bi-shield-check", text:"Keamanan 24 Jam"},
+        {icon:"bi-tree", text:"Taman"}
+    ],
+
+    kamar: [
+        {icon:"bi-tv", text:"Smart TV"},
+        {icon:"bi-snow", text:"AC"},
+        {icon:"bi-lightning", text:"Stop Kontak"},
+        {icon:"bi-droplet", text:"Air Panas"},
+        {icon:"bi-lamp", text:"Lampu Tidur"},
+        {icon:"bi-box-seam", text:"Lemari"}
+    ],
+
+    kerja: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    penawaranlain: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ],
+    fasilitastambahan: [
+        {icon:"bi-laptop", text:"Meja Kerja"},
+        {icon:"bi-printer", text:"Printer"},
+        {icon:"bi-camera-video", text:"Ruang Meeting"},
+        {icon:"bi-globe", text:"Internet Cepat"}
+    ]
+},
+        images: [
+        "../detail/dlx.jpeg",
+        "../detail/dlx1.jpeg",
+        "../detail/dlx2.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx5.jpeg",
+        "../detail/dlx3.jpeg",
+        "../detail/dlx4.JPG",
+        "../detail/dlx6.jpeg",
+        ]
+    }
+      
+    };
+
+function renderFacilities() {
+
+if (!rooms[room] || !rooms[room].facilities) return;
+
+const f = rooms[room].facilities;
+
+const html = `
+<div style="border:1px solid rgb(231,229,229);border-radius:8px;padding:1rem; height:100%;">
+
+<h6 class="mb-3 fw-bold">Fasilitas</h6>
+
+<div class="accordion facility-accordion" id="facilityAccordion">
+
+${generateAccordion("fasilitasUmum","bi-stars","Fasilitas Umum",f.umum)}
+
+${generateAccordion("fasilitasKamar","bi-door-open","Fasilitas Kamar",f.kamar)}
+
+${generateAccordion("fasilitasKerja","bi-briefcase","Fasilitas Kerja",f.kerja)}
+${generateAccordion("penawaranlain","bi-briefcase","Penawaran lain",f.penawaranlain)}
+${generateAccordion("fasilitastambahan","bi-briefcase","Fasilitas Tambahan",f.fasilitastambahan)}
+
+</div>
+
+</div>
+`;
+
+document.getElementById("roomFacilities").innerHTML = html;
+
+}
+
+   function generateFacilityItems() {
+
+    if (!rooms[room] || !rooms[room].facilities) return "";
+
+    return rooms[room].facilities.map(item => `
+        <div class="col-6 col-md-3 mb-2 d-flex align-items-center" style="font-size:0.9rem;">
+            <i class="bi bi-check-circle-fill text-success me-2"></i> ${item}
+        </div>
+    `).join("");
+}
+
+function generateAccordion(id,icon,title,data){
+
+if(!data) return "";
+
+return `
+<div class="accordion-item">
+
+<h2 class="accordion-header">
+<button class="accordion-button collapsed"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#${id}">
+
+<i class="bi ${icon} me-2"></i> ${title}
+
+</button>
+</h2>
+
+<div id="${id}" class="accordion-collapse collapse"
+data-bs-parent="#facilityAccordion">
+
+<div class="accordion-body">
+
+<div class="row">
+
+${data.map(item => `
+<div class="col-6 mb-2">
+<i style="color: blue;" class="bi ${item.icon} me-2"></i>
+${item.text}
+</div>
+`).join("")}
+
+</div>
+
+</div>
+</div>
+
+</div>
+`;
+
+}
+
+    renderFacilities();
+    if (rooms[room]) {
+
+    // Ubah teks
+    document.getElementById("roomTitle").innerText = rooms[room].title;
+    document.getElementById("roomDesc1").innerText = rooms[room].desc1;
+    document.getElementById("roomDesc2").innerText = rooms[room].desc2;
+
+    // Ubah gallery
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach((item, index) => {
+        if (rooms[room].images[index]) {
+            item.querySelector("img").src = rooms[room].images[index];
+            item.setAttribute("data-full", rooms[room].images[index]);
+        }
+    });
+
+    } else {
+    document.getElementById("roomTitle").innerText = "Room Not Found";
+    }
+    </script>
+
+   <div style="width: 100%;" class="container-fluid bg-dark text-light footer wow fadeIn mt-3" data-wow-delay="0.1s">
+                <div class="container-fluid pb-5">
+                    <div class="row g-4 mx-0">
+                        <div class="col-md-5 col-lg-4">
+                            <div class="bg-primary rounded p-4">
+                                <a href="index.html"><h1 class="text-white text-uppercase mb-3">Harausky</h1></a>
+                                <p class="text-white mb-0">
+                                    Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">Harausky – Premium Version</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site’s launch.
+                                </p>    
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                            <h6 class="section-title text-start text-primary text-uppercase mb-4">Contact</h6>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Harau, Kab. Lima Puluh Kota, Sumbar</p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+62 823 1000 5406</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>harausky@gmail.com</p>
+                            <div class="d-flex pt-2">
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                                <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="row gy-5 g-4">
+                                <div class="col-md-6">
+                                    <h6 class="section-title text-start text-primary text-uppercase mb-4">Company</h6>
+                                    <a class="btn btn-link" href="">About Us</a>
+                                    <a class="btn btn-link" href="">Contact Us</a>
+                                    <a class="btn btn-link" href="">Privacy Policy</a>
+                                    <a class="btn btn-link" href="">Terms & Condition</a>
+                                    <a class="btn btn-link" href="">Support</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="section-title text-start text-primary text-uppercase mb-4">Services</h6>
+                                    <a class="btn btn-link" href="">Food & Restaurant</a>
+                                    <a class="btn btn-link" href="">Spa & Fitness</a>
+                                    <a class="btn btn-link" href="">Sports & Gaming</a>
+                                    <a class="btn btn-link" href="">Event & Party</a>
+                                    <a class="btn btn-link" href="">GYM & Yoga</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                &copy; <a class="border-bottom" href="#">Harausky</a>, All Right Reserved. 
+                                
+                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                                Designed By <a class="border-bottom" href="https://htmlcodex.com">Ranah Digital</a>
+                                <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">Ranah Digital</a>
+                            </div>
+                            <div class="col-md-6 text-center text-md-end">
+                                <div class="footer-menu">
+                                    <a href="">Home</a>
+                                    <a href="">Cookies</a>
+                                    <a href="">Help</a>
+                                    <a href="">FQAs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+    </body>
+
+    </html>
