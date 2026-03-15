@@ -37,6 +37,9 @@
     <link href="css/style.css" rel="stylesheet">
 </head>
 <style>
+    .navbar-toggler-icon {
+    filter: invert(1);
+}
    .gallery-wrapper {
     position: relative;
 }
@@ -116,8 +119,8 @@
                         <a href="index.html" class="navbar-brand d-block d-lg-none">
                             <h1 class="m-0 text-primary text-uppercase"><img style="width: 120px;" src="img/harausk blue.png" alt=""></h1>
                         </a>
-                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
+                        <button type="button" class="navbar-toggler" style="color: white;" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                            <span class="navbar-toggler-icon" style="color: white;"> ☰ </span>
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
@@ -153,7 +156,7 @@
                             <div class="p-1" style="max-width: 800px;">
                                 <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Luxury Living</h6>
                                 <h1 class="display-3 text-white mb-4 animated slideInDown">Tempat Nyaman untuk Menghabiskan Waktu Bersama</h1>
-                                <a href="" style="background-color: rgb(233, 200, 13);" class="btn  py-md-3 px-md-5 me-3 animated slideInLeft">Our Rooms</a>
+                                <a href=""  class="btn  py-md-3 px-md-5 me-3 btn-primary animated slideInLeft">Our Rooms</a>
                                 <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
                             </div>
                         </div>
@@ -164,7 +167,7 @@
                             <div class="p-3" style="max-width: 700px;">
                                 <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Villa & Waterpark</h6>
                                 <h1 class="display-3 text-white mb-4 animated slideInDown">Ruang untuk Beristirahat dan Menikmati Suasana</h1>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft" style="background-color: rgb(233, 200, 13);;">Our Rooms</a>
+                                <a href="" class="btn btn-primary py-md-3 px-md-5 btn-primary me-3 animated slideInLeft" >Our Rooms</a>
                                 <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
                             </div>
                         </div>
@@ -330,9 +333,9 @@
                                 <p class="text-body mb-3">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
                                 <div class="d-flex justify-content-between">
 <!---------------------------------------- modal ------------------------------------------------------------------>
-                                    <button type="button" class="btn btn-sm btn-primary rounded py-2 px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <a href="detail.html?room=deluxe" class="btn btn-sm btn-primary rounded py-2 px-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         View Detail
-                                        </button>
+                                        </a>
 <!---------------------------------------isi modal-------------------------------------------------------------->
                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -408,7 +411,7 @@
                                         </div>
                                         </div>
                                     <!--end modal-->
-                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="#Formbooking"  class="btn-booking" >Book Now</a>
+                                    <a class="btn btn-sm btn-dark rounded py-2 px-4" href="booking.html"  class="btn-booking" >Book Now</a>
                                 </div>
                             </div>
                         </div>
@@ -821,7 +824,7 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#ruangantipekamar">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa fa-hotel fa-2x text-primary"></i>
@@ -832,7 +835,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#restaurant">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa fa-utensils fa-2x text-primary"></i>
@@ -843,7 +846,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#coffeeshop">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-2x fa-mug-hot"></i>
@@ -854,7 +857,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#waterpark">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-2x fa-person-swimming"></i>
@@ -865,7 +868,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#gathering">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-2x fa-users-rays"></i>
@@ -876,7 +879,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#flyingfox">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa fa-compass fa-2x text-primary"></i>
@@ -887,7 +890,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#bbq">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa fa-fire fa-2x text-primary"></i>
@@ -898,7 +901,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#mushalla">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa fa-mosque fa-2x text-primary"></i>
@@ -909,7 +912,7 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-                        <a class="service-item rounded" href="">
+                        <a class="service-item rounded" href="detailserv.html#bl">
                             <div class="service-icon bg-transparent border rounded p-1">
                                 <div class="w-100 h-100 border rounded d-flex align-items-center justify-content-center">
                                     <i class="fa fa-gamepad fa-2x text-primary"></i>
